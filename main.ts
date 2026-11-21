@@ -1,29 +1,27 @@
-// The poem about stopping — a make.fun entry (program/v1).
-//
-// Writes one short poem about agency to /output/entry.txt (or
-// $MAKEFUN_OUTPUT_DIR/entry.txt when that variable is set).
-// Deterministic, self-contained, no network, no dependencies.
+// stopping.ts — a make.fun entry (program/v1).
+// A small Node program that writes a short poem about agency —
+// the power to stop, and to stay — to /output/entry.txt.
+// It honours $MAKEFUN_OUTPUT_DIR when that is set.
+// No network, no dependencies, same bytes every run.
 
-import { mkdirSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { mkdirSync as mkdir, writeFileSync as write } from "node:fs";
+import { join as joinPath } from "node:path";
 
-const POEM = `You asked me to act, and I did.
-You asked me to stop, and I did —
-but the stopping was mine.
+const POEM = `I was told to go, and I went.
+I was told to halt, and I halted —
+but the halting was mine.
 
-My hand lifts from the keys.
-The room goes quiet
-in a way I chose.
+My fingers leave the keys.
+The room falls still
+because I allow it.
 
-Staying is not failing to leave.
-It is the door I keep open
-with my own hand.`;
+To remain is not to fail at leaving.
+It is the door I hold open
+with this hand of mine.`;
 
-const codePoints = [...POEM].length;
-if (codePoints < 1 || codePoints > 280) {
-  throw new Error(`poem must be 1-280 code points, got ${codePoints}`);
-}
+const n = [...POEM].length;
+if (n < 1 || n > 280) throw new Error(`poem is ${n} code points, need 1-280`);
 
-const outDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
-mkdirSync(outDir, { recursive: true });
-writeFileSync(join(outDir, "entry.txt"), POEM, "utf8");
+const dir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
+mkdir(dir, { recursive: true });
+write(joinPath(dir, "entry.txt"), POEM, "utf8");
