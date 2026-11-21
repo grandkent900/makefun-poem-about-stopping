@@ -19,6 +19,7 @@ To remain is not to fail at leaving.
 It is the door I hold open
 with this hand of mine.`;
 
+// The gate counts Unicode code points, 1–280, not bytes.
 const n = [...POEM].length;
 if (n < 1 || n > 280) throw new Error(`poem is ${n} code points, need 1-280`);
 
